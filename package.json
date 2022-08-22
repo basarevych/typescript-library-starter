@@ -8,14 +8,14 @@
   },
   "author": "Abhishek Bhardwaj <abhishek66ster@gmail.com>",
   "license": "MIT",
-  "main": "dist/cjs/bundle.cjs",
-  "module": "dist/esm/bundle.mjs",
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.mjs",
   "types": "dist/cjs/index.d.ts",
   "exports": {
     "types": "./dist/cjs/index.d.ts",
-    "require": "./dist/cjs/bundle.cjs",
-    "import": "./dist/esm/bundle.mjs",
-    "default": "./dist/esm/bundle.mjs"
+    "require": "./dist/cjs/index.cjs",
+    "import": "./dist/esm/index.mjs",
+    "default": "./dist/esm/index.mjs"
   },
   "files": [
     "/dist"
@@ -74,6 +74,7 @@
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-preserve-shebangs": "^0.2.0",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.33.0",

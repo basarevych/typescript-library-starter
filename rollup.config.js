@@ -9,23 +9,30 @@ import replace from '@rollup/plugin-replace'
 import analyze from 'rollup-plugin-analyzer'
 import visualizer from 'rollup-plugin-visualizer'
 import copy from 'rollup-plugin-copy'
+import { preserveShebangs } from 'rollup-plugin-preserve-shebangs'
 
 const outputs = [
   {
     dir: 'dist/esm',
     format: 'esm',
+    entryFileNames: '[name].mjs',
     freeze: false,
     globals: {},
     sourcemap: true,
     exports: 'auto',
+    preserveModules: true,
+    preserveModulesRoot: 'src',
   },
   {
     dir: 'dist/cjs',
     format: 'cjs',
+    entryFileNames: '[name].cjs',
     freeze: false,
     globals: {},
     sourcemap: true,
     exports: 'auto',
+    preserveModules: true,
+    preserveModulesRoot: 'src',
   },
 ]
 
@@ -75,18 +82,22 @@ export default {
               ...pkg
             } = JSON.parse(contents.toString())
 
-            return JSON.stringify({
-              ...pkg,
-              main: main.replace('dist/', ''),
-              module: module.replace('dist/', ''),
-              types: types.replace('dist/', ''),
-              exports: {
-                types: exports.types.replace('dist/', ''),
-                require: exports.require.replace('dist/', ''),
-                import: exports.import.replace('dist/', ''),
-                default: exports.default.replace('dist/', ''),
+            return JSON.stringify(
+              {
+                ...pkg,
+                main: main.replace('dist/', ''),
+                module: module.replace('dist/', ''),
+                types: types.replace('dist/', ''),
+                exports: {
+                  types: exports.types.replace('dist/', ''),
+                  require: exports.require.replace('dist/', ''),
+                  import: exports.import.replace('dist/', ''),
+                  default: exports.default.replace('dist/', ''),
+                },
               },
-            })
+              null,
+              2,
+            )
           },
         },
       ],
@@ -98,6 +109,8 @@ export default {
     visualizer({
       filename: 'rollup-plugin-visualizer-stats.html',
     }),
+    // disable shebang in bin files temporarily (for the compilation to succeed), and restore them after the compilation
+    preserveShebangs()
   ],
   preserveModules: true,
   external: [

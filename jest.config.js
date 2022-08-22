@@ -1,9 +1,9 @@
 module.exports = {
   preset: 'ts-jest/presets/js-with-ts',
-  coveragePathIgnorePatterns: ['/node_modules/'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/dist/'],
   globals: {
     'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.json',
+      tsconfig: '<rootDir>/tsconfig.test.json',
       diagnostics: false,
     },
   },
